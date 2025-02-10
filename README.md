@@ -1,128 +1,128 @@
 # NN_Explained
 
-# Lienzo Conceptual Extenso: Arquitecturas de Redes Neuronales y sus Aplicaciones
+# Extensive Conceptual Canvas: Neural Network Architectures and Their Applications
 
-Imaginemos un gran lienzo (o mural) dividido en diferentes secciones (cuadros). Cada una de estas secciones se dedica a explorar un tipo de red neuronal, profundizando en sus principios de funcionamiento, componentes, ventajas, desventajas, **aplicaciones**, **definiciones matemáticas**, **ejemplos paso a paso**, **cómo preparar los datos** y ahora también **ejemplos básicos de implementación en Python** (usando Keras, parte de TensorFlow).
+Imagine a large canvas (or mural) divided into different sections (panels). Each section is dedicated to exploring a type of neural network, delving into its operational principles, components, advantages, disadvantages, **applications**, **mathematical definitions**, **step-by-step examples**, **how to prepare the data**, and now also **basic Python implementation examples** (using Keras, part of TensorFlow).
 
 ---
 
-## CUADRO 1: Redes Neuronales Feedforward (FNN) o MLP
+## PANEL 1: Feedforward Neural Networks (FNN) or MLP
 
-### 1.1. Definición
-Las Redes Neuronales Feedforward (FNN), también conocidas como **Multilayer Perceptron (MLP)**, constituyen la forma más clásica y básica de red neuronal. En ellas, la información fluye en un solo sentido: desde la capa de entrada, pasando por una o más capas ocultas, hasta la capa de salida.
+### 1.1. Definition
+Feedforward Neural Networks (FNN), also known as **Multilayer Perceptron (MLP)**, are the most classic and basic form of neural networks. In these networks, information flows in a single direction: from the input layer, through one or more hidden layers, to the output layer.
 
-### 1.2. Arquitectura
-1. **Capa de entrada:** Recibe los datos de entrada (características o "features"). Por ejemplo, en un problema de clasificación de dígitos, cada píxel puede ser una neurona de la capa de entrada.
-2. **Capas ocultas:** Una o varias capas que realizan transformaciones intermedias sobre los datos. Cada neurona en estas capas calcula una suma ponderada de sus entradas, seguida de una función de activación (sigmoid, tanh, ReLU, etc.).
-3. **Capa de salida:** Emite la predicción final. Por ejemplo, en un problema de clasificación binaria, podría ser una sola neurona con activación sigmoid, mientras que en una clasificación multiclase se utiliza softmax.
+### 1.2. Architecture
+1. **Input Layer:** Receives the input data (features). For example, in a digit classification problem, each pixel might be a neuron in the input layer.
+2. **Hidden Layers:** One or more layers that perform intermediate transformations on the data. Each neuron in these layers computes a weighted sum of its inputs, followed by an activation function (sigmoid, tanh, ReLU, etc.).
+3. **Output Layer:** Produces the final prediction. For instance, in a binary classification problem, it could be a single neuron with a sigmoid activation, while in a multi-class classification, a softmax is used.
 
-### 1.3. Entrenamiento
-El entrenamiento comúnmente se hace mediante **backpropagation** (retropropagación), usando un optimizador como Gradient Descent, Adam u otros. La idea:
-1. Se calcula la salida de la red para una entrada.
-2. Se mide el error en función de la salida deseada.
-3. Se propaga el error hacia atrás, ajustando los pesos para minimizar la pérdida.
+### 1.3. Training
+Training is commonly done via **backpropagation** using an optimizer such as Gradient Descent, Adam, or others. The idea is:
+1. Compute the network's output for a given input.
+2. Measure the error based on the desired output.
+3. Propagate this error backward, adjusting the weights to minimize the loss.
 
-### 1.4. Aplicaciones
-- **Clasificación:** Detección de spam, clasificación de imágenes simples, reconocimiento de patrones generales.
-- **Regresión:** Predicción de precios (acciones, inmuebles), estimaciones de rendimiento.
-- **Sistemas de recomendación:** Combinado con otras técnicas.
+### 1.4. Applications
+- **Classification:** Spam detection, simple image classification, general pattern recognition.
+- **Regression:** Price prediction (stocks, real estate), performance estimations.
+- **Recommendation Systems:** Combined with other techniques.
 
-### 1.5. Fortalezas y Limitaciones
-- **Ventajas:**
-  - Estructura simple y fácil de implementar.
-  - Útiles como "redes base" en muchos problemas.
-- **Desventajas:**
-  - Escalan mal cuando el problema requiere detectar estructuras complejas (ej. imágenes, secuencias).
-  - Pueden precisar muchas capas para problemas más avanzados, incrementando el riesgo de overfitting y el coste computacional.
+### 1.5. Strengths and Limitations
+- **Advantages:**
+  - Simple structure and easy to implement.
+  - Useful as "base networks" for many problems.
+- **Disadvantages:**
+  - Do not scale well when the problem requires detecting complex structures (e.g., images, sequences).
+  - May need many layers for more advanced problems, increasing the risk of overfitting and computational cost.
 
-### 1.7. Preparación de Datos e Inputs
-- **Normalización o Estandarización:** Se suele escalar cada característica para que tenga media 0 y desviación 1 (o mínimo 0 y máximo 1). Esto acelera la convergencia.
-- **Formateo de Entradas:** Para MLP, se suelen emplear vectores o tensores 1D (si hay más dimensiones, se suelen "aplanar" o condensar).
-- **Manejo de Valores Perdidos:** Es importante imputar o descartar valores nulos para evitar inconsistencias en el entrenamiento.
-- **Codificación de Variables Categóricas:** One-hot, label encoding u otras técnicas si hay atributos no numéricos.
+### 1.7. Data Preparation and Inputs
+- **Normalization or Standardization:** It’s common to scale each feature to have mean 0 and standard deviation 1 (or min 0 and max 1). This speeds up convergence.
+- **Input Formatting:** For MLPs, data is typically in 1D vectors or tensors (if there are more dimensions, they’re often “flattened”).
+- **Handling Missing Values:** Important to impute or discard null values to avoid inconsistencies in training.
+- **Categorical Variable Encoding:** One-hot, label encoding, or other techniques if there are non-numerical attributes.
 
-### 1.8. Ejemplo de Creación de la Red y Entrenamiento en Python
+### 1.8. Example of Network Creation and Training in Python
 
-**Ejemplo con Keras (TensorFlow):**
+**Example with Keras (TensorFlow):**
 ```python
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 from tensorflow.keras.optimizers import Adam
 
-# Datos sintéticos de ejemplo
-X_train = np.random.rand(1000, 2)  # 1000 muestras, 2 features
-y_train = (X_train[:, 0] + X_train[:, 1] > 1).astype(int)  # Etiqueta binaria
+# Synthetic example data
+X_train = np.random.rand(1000, 2)  # 1000 samples, 2 features
+y_train = (X_train[:, 0] + X_train[:, 1] > 1).astype(int)  # Binary label
 
-# Definir modelo
+# Define model
 model = Sequential()
-model.add(Dense(2, input_shape=(2,), activation='relu'))  # Capa oculta con 2 neuronas
-model.add(Dense(1, activation='sigmoid'))                 # Capa de salida (binaria)
+model.add(Dense(2, input_shape=(2,), activation='relu'))  # Hidden layer with 2 neurons
+model.add(Dense(1, activation='sigmoid'))                 # Output layer (binary)
 
-# Compilar
+# Compile
 model.compile(optimizer=Adam(learning_rate=0.01), loss='binary_crossentropy', metrics=['accuracy'])
 
-# Entrenar
+# Train
 model.fit(X_train, y_train, epochs=10, batch_size=32)
 ```
-En este ejemplo:
-1. Se generan datos sintéticos aleatorios con 2 características. La etiqueta es 1 si la suma de las características es mayor que 1.
-2. Definimos una red MLP con 1 capa oculta.
-3. Se entrena con 10 épocas y lotes de 32.
+In this example:
+1. Random synthetic data with 2 features. The label is 1 if the sum of the features is greater than 1.
+2. A one-hidden-layer MLP is defined.
+3. Trained for 10 epochs with batches of 32.
 
 ---
 
-## CUADRO 2: Redes Neuronales Convolucionales (CNN)
+## PANEL 2: Convolutional Neural Networks (CNN)
 
-### 2.1. Definición
-Las CNN (Convolutional Neural Networks) son redes pensadas inicialmente para analizar imágenes, aunque también se aplican en audio, texto (transformando en "imágenes" de embeddings), y otros datos con estructura de cuadrícula.
+### 2.1. Definition
+CNNs (Convolutional Neural Networks) were initially designed for image analysis, although they also apply to audio, text (transforming into "embeddings images"), and other grid-structured data.
 
-### 2.2. Elementos Principales
-1. **Capas Convolucionales:** Se aplican "filtros" que recorren la imagen o matriz de datos para extraer patrones locales (bordes, contornos, texturas). Cada filtro produce un "mapa de características".
-2. **Capas de Pooling:** Reducen la dimensión espacial (ej. max pooling). Esto ayuda a lograr invariancia frente a pequeñas traslaciones.
-3. **Capas Completamente Conectadas:** Al final de la CNN, a menudo se incluyen para la clasificación.
+### 2.2. Main Elements
+1. **Convolutional Layers:** "Filters" or kernels scan the image or data matrix to extract local patterns (edges, contours, textures). Each filter produces a "feature map."
+2. **Pooling Layers:** Reduce spatial dimensions (e.g., max pooling), helping achieve translation invariance.
+3. **Fully Connected Layers:** Often included at the end of the CNN for classification.
 
-### 2.3. Entrenamiento
-Se basa también en backpropagation, pero adaptada a las operaciones convolucionales. El uso de GPUs se vuelve especialmente efectivo dado el gran volumen de datos e imágenes.
+### 2.3. Training
+Also based on backpropagation, but adapted for convolutional operations. GPU usage is particularly beneficial due to the large amount of data and images.
 
-### 2.4. Aplicaciones
-- **Visión por Computadora:**
-  - Clasificación de imágenes (por ejemplo, reconocer animales, objetos, rostros).
-  - Detección de objetos (ej. YOLO, Faster R-CNN).
-  - Segmentación de imágenes (ej. U-Net).
-- **Análisis de audio:** Reconocimiento de patrones en espectrogramas.
-- **Procesamiento de texto en 2D:** Embeddings dispuestos como mapas 2D.
+### 2.4. Applications
+- **Computer Vision:**
+  - Image classification (e.g., recognize animals, objects, faces).
+  - Object detection (e.g., YOLO, Faster R-CNN).
+  - Image segmentation (e.g., U-Net).
+- **Audio Analysis:** Recognize patterns in spectrograms.
+- **Text Processing in 2D:** Embeddings arranged as 2D maps.
 
-### 2.5. Fortalezas y Limitaciones
-- **Ventajas:**
-  - Capturan patrones espaciales de manera eficiente.
-  - Menos parámetros que una red totalmente conectada equivalente.
-- **Desventajas:**
-  - Modelan bien la información local, pero pueden requerir trucos extra para capturar relaciones globales.
-  - Siguen siendo costosas en términos de cómputo.
+### 2.5. Strengths and Limitations
+- **Advantages:**
+  - Efficiently capture spatial patterns.
+  - Fewer parameters than an equivalent fully connected network.
+- **Disadvantages:**
+  - Primarily model local information, may require extra tricks to capture global relationships.
+  - Still computationally expensive.
 
-### 2.7. Preparación de Datos e Inputs
-- **Formateo de Imágenes:** Se acostumbra tener tensores \((N, C, H, W)\), donde \(N\) es el número de ejemplos, \(C\) los canales, \(H\) y \(W\) la altura y anchura.
-- **Normalización por Canal:** Es común restar la media y dividir por la desviación estándar (calculadas en el conjunto de entrenamiento) para cada canal.
-- **Data Augmentation (Imágenes):** Rotaciones, flips, cambios de color para aumentar la diversidad de los datos y evitar overfitting.
-- **Para Audio:** Se suele convertir a espectrogramas (2D) y tratarlos como "imágenes".
-- **Para Texto (en 2D):** Representar embeddings como matrices si se quiere usar convoluciones.
+### 2.7. Data Preparation and Inputs
+- **Image Formatting:** Tensors usually of shape \((N, C, H, W)\), where \(N\) is the number of examples, \(C\) is the number of channels, and \(H\) and \(W\) are height and width.
+- **Per-Channel Normalization:** It’s common to subtract the mean and divide by the standard deviation (calculated on the training set) for each channel.
+- **Data Augmentation (Images):** Rotations, flips, color changes to increase data diversity and avoid overfitting.
+- **For Audio:** Often converted to spectrograms (2D) and treated like "images."
+- **For Text (in 2D):** Use embeddings as matrices if we want to apply convolutions.
 
-### 2.8. Ejemplo de Creación de la Red y Entrenamiento en Python
+### 2.8. Example of Network Creation and Training in Python
 
-**Ejemplo con Keras (TensorFlow) para Clasificación de Imágenes (simplificado):**
+**Example with Keras (TensorFlow) for Image Classification (simplified):**
 ```python
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 from tensorflow.keras.optimizers import Adam
 
-# Supongamos que tenemos 1000 imágenes de 28x28 en escala de grises (1 canal)
+# Suppose we have 1000 images of 28x28 in grayscale (1 channel)
 X_train = np.random.rand(1000, 28, 28, 1).astype(np.float32)
-# Etiquetas para 10 clases (por ejemplo, dígitos 0-9)
+# Labels for 10 classes (e.g., digits 0-9)
 y_train = np.random.randint(0, 10, size=(1000,))
 
-# Convertimos las etiquetas a one-hot
+# Convert labels to one-hot
 y_train_onehot = np.zeros((1000, 10))
 for i, label in enumerate(y_train):
     y_train_onehot[i, label] = 1
@@ -131,171 +131,171 @@ model = Sequential()
 model.add(Conv2D(8, (3,3), activation='relu', input_shape=(28,28,1)))
 model.add(MaxPooling2D((2,2)))
 model.add(Flatten())
-model.add(Dense(10, activation='softmax'))  # salida para 10 clases
+model.add(Dense(10, activation='softmax'))  # output for 10 classes
 
 model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
 model.fit(X_train, y_train_onehot, epochs=5, batch_size=32)
 ```
-1. Se generan datos sintéticos (28x28, 1 canal, 10 clases).
-2. Definimos una CNN muy sencilla con una capa conv, pooling, flatten y capa densa final.
-3. Entrenamos durante 5 épocas.
+1. Synthetic data is generated (28x28, 1 channel, 10 classes).
+2. We define a very simple CNN with one conv layer, pooling, flatten, and a final dense layer.
+3. Trained for 5 epochs.
 
 ---
 
-## CUADRO 3: Redes Neuronales Recurrentes (RNN)
+## PANEL 3: Recurrent Neural Networks (RNN)
 
-### 3.1. Definición
-Las RNN (Recurrent Neural Networks) se utilizan para datos secuenciales (texto, audio, series temporales), permitiendo que la red "recuerde" información de pasos previos a través de conexiones recurrentes en su arquitectura.
+### 3.1. Definition
+RNNs (Recurrent Neural Networks) are used for sequential data (text, audio, time series), enabling the network to "remember" information from previous steps via recurrent connections in its architecture.
 
-### 3.2. Arquitectura
-1. **Estado oculto (hidden state):** actúa como "memoria", se actualiza en cada paso de la secuencia.
-2. **Entrada secuencial:** cada nuevo elemento de la secuencia (palabra, vector temporal) se procesa con el estado oculto anterior.
-3. **Salida secuencial u oculta:** se puede generar una salida por cada paso (muchos a muchos) o solo tras procesar toda la secuencia (muchos a uno).
+### 3.2. Architecture
+1. **Hidden State:** Acts as "memory," updated at each step in the sequence.
+2. **Sequential Input:** Each new element in the sequence (word, temporal vector) is processed along with the previous hidden state.
+3. **Sequential or Hidden Output:** Can produce an output at each step (many-to-many) or only after processing the entire sequence (many-to-one).
 
-### 3.3. Entrenamiento: Backpropagation Through Time (BPTT)
-Se "desenrolla" la red en el tiempo, lo que puede hacer que el entrenamiento sea más costoso y provoque problemas de vanishing o exploding gradients.
+### 3.3. Training: Backpropagation Through Time (BPTT)
+The network is "unrolled" in time, which can be more computationally expensive and cause vanishing or exploding gradient problems.
 
-### 3.4. Aplicaciones
-- **NLP (Procesamiento de Lenguaje Natural):** Análisis de sentimiento, clasificación de oraciones, modelado de lenguaje.
-- **Traducción automática:** Un RNN puede codificar la frase de entrada y otro RNN decodificar al idioma de destino.
-- **Series temporales:** Predicción de datos financieros, sensores, clima.
+### 3.4. Applications
+- **NLP (Natural Language Processing):** Sentiment analysis, sentence classification, language modeling.
+- **Machine Translation:** One RNN can encode the input sentence and another RNN decode into the target language.
+- **Time Series:** Prediction of financial data, sensor data, weather patterns.
 
-### 3.5. Fortalezas y Limitaciones
-- **Ventajas:**
-  - Manejan datos secuenciales de forma natural.
-  - Capturan dependencias temporales.
-- **Desventajas:**
-  - Dificultad para aprender dependencias a largo plazo.
-  - Entrenamiento lento en secuencias largas.
+### 3.5. Strengths and Limitations
+- **Advantages:**
+  - Naturally handle sequential data.
+  - Capture temporal dependencies.
+- **Disadvantages:**
+  - Difficulty in learning long-term dependencies.
+  - Slow training on long sequences.
 
-### 3.7. Preparación de Datos e Inputs
-- **Representación de Secuencias:** Para texto, normalmente se tokeniza cada frase y se convierte en índices o embeddings. Las secuencias pueden rellenarse (padding) para tener una longitud fija.
-- **Normalización de Series Temporales:** Se puede restar la media y dividir por la desviación estándar de cada característica temporal.
-- **Batching de Secuencias:** Para entrenar en lotes, se suelen agrupar secuencias de longitud similar o recortar/padding para tener tamaños uniformes.
-- **Enmascaramiento:** Cuando hay diferentes longitudes, se utiliza un "mask" para ignorar la parte "inútil".
+### 3.7. Data Preparation and Inputs
+- **Sequence Representation:** For text, typically tokenize each sentence and convert to indices or embeddings. Sequences may be padded to a fixed length.
+- **Time Series Normalization:** Often subtract mean and divide by the standard deviation of each temporal feature.
+- **Sequence Batching:** Group sequences of similar length or use truncation/padding for uniform lengths.
+- **Masking:** When sequences vary in length, use a "mask" to ignore unnecessary parts.
 
-### 3.8. Ejemplo de Creación de la Red y Entrenamiento en Python
+### 3.8. Example of Network Creation and Training in Python
 
-**Ejemplo con Keras (TensorFlow) para secuencias simples:**
+**Example with Keras (TensorFlow) for simple sequences:**
 ```python
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import SimpleRNN, Dense
 
-# Ejemplo: supongamos secuencias de longitud 5, con 1 feature
-# Generamos 1000 secuencias aleatorias
+# Example: sequences of length 5, with 1 feature
+# Generate 1000 random sequences
 X_train = np.random.rand(1000, 5, 1)
-# Etiqueta binaria: 1 si la media de la secuencia > 0.5
+# Binary label: 1 if the average of the sequence > 0.5
 y_train = (X_train.mean(axis=1).flatten() > 0.5).astype(int)
 
 model = Sequential()
-model.add(SimpleRNN(4, input_shape=(5, 1), activation='tanh'))  # Estado oculto de dimensión 4
+model.add(SimpleRNN(4, input_shape=(5, 1), activation='tanh'))  # Hidden state dimension of 4
 model.add(Dense(1, activation='sigmoid'))
 
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model.fit(X_train, y_train, epochs=5, batch_size=32)
 ```
-1. Se crean secuencias de 5 pasos, cada paso con 1 feature.
-2. La RNN (SimpleRNN) produce un solo vector de salida al final, que se pasa a una capa densa binaria.
-3. Se entrena por 5 épocas.
+1. Create sequences of 5 steps, each with 1 feature.
+2. The RNN (SimpleRNN) produces a single output vector at the end, passed to a binary dense layer.
+3. Train for 5 epochs.
 
 ---
 
-## CUADRO 4: LSTM (Long Short-Term Memory) y GRU (Gated Recurrent Unit)
+## PANEL 4: LSTM (Long Short-Term Memory) and GRU (Gated Recurrent Unit)
 
 ### 4.1. LSTM
-Las LSTM solucionan en gran parte el problema de desvanecimiento de gradientes usando una "celda" interna y **tres puertas**:
-1. **Puerta de Olvido (forget gate):** decide qué parte del estado anterior mantener.
-2. **Puerta de Entrada (input gate):** determina cuánta información nueva se agrega.
-3. **Puerta de Salida (output gate):** regula la salida de la celda.
+LSTMs largely solve the vanishing gradient problem using an internal "cell" and **three gates**:
+1. **Forget Gate:** Decides which part of the previous state to keep.
+2. **Input Gate:** Determines how much new information to add.
+3. **Output Gate:** Regulates how much of the cell state to expose.
 
-**Aplicaciones:**
-- Traducción automática.
-- Modelado del lenguaje.
-- Reconocimiento de voz.
+**Applications:**
+- Machine translation.
+- Language modeling.
+- Speech recognition.
 
 ### 4.2. GRU
-Las GRU simplifican la arquitectura de las LSTM, reduciendo a dos puertas (actualización y reinicio), manteniendo un rendimiento similar en muchos casos.
+GRUs simplify the LSTM architecture, reducing it to two gates (update and reset) while maintaining similar performance in many cases.
 
-**Aplicaciones:**
+**Applications:**
 - Chatbots.
-- Análisis de series temporales (más corto y eficiente que LSTM).
+- Time series analysis (often shorter and more efficient than LSTM).
 
-### 4.3. Fortalezas y Limitaciones
-- **Ventajas:**
-  - LSTM y GRU pueden retener información de secuencias más largas que una RNN simple.
-  - Menos problemas de vanishing gradient.
-- **Desventajas:**
-  - Más parámetros que una RNN básica.
-  - Entrenamientos largos, especialmente para secuencias muy extensas.
+### 4.3. Strengths and Limitations
+- **Advantages:**
+  - LSTM/GRU can retain information over longer sequences than a simple RNN.
+  - Fewer vanishing gradient issues.
+- **Disadvantages:**
+  - More parameters than a basic RNN.
+  - Longer training times, especially for very long sequences.
 
-### 4.6. Ejemplo de Creación de la Red y Entrenamiento en Python
+### 4.6. Example of Network Creation and Training in Python
 ```python
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import LSTM, GRU, Dense
 
-# Ejemplo: secuencias de longitud 10, 1 feature
+# Example: sequences of length 10, 1 feature
 X_train = np.random.rand(500, 10, 1)
 y_train = (X_train.mean(axis=1).flatten() > 0.5).astype(int)
 
 model = Sequential()
-# Podemos usar LSTM o GRU. Aquí usamos LSTM:
-model.add(LSTM(8, input_shape=(10, 1)))  # 8 neuronas LSTM
+# We can use LSTM or GRU. Here we use LSTM:
+model.add(LSTM(8, input_shape=(10, 1)))  # 8 LSTM neurons
 model.add(Dense(1, activation='sigmoid'))
 
 model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 model.fit(X_train, y_train, epochs=5, batch_size=32)
 ```
-1. Genera 500 secuencias de longitud 10.
-2. LSTM con 8 neuronas en su capa.
-3. Entrena durante 5 épocas.
+1. Generates 500 sequences of length 10.
+2. An LSTM with 8 neurons.
+3. Trained for 5 epochs.
 
 ---
 
-## CUADRO 5: Autoencoders
+## PANEL 5: Autoencoders
 
-### 5.1. Definición
-Un **Autoencoder** es una red diseñada para aprender representaciones comprimidas (codificaciones) de los datos de manera no supervisada. El objetivo principal es reconstruir la entrada en la salida, forzando a la red a comprimir información.
+### 5.1. Definition
+An **Autoencoder** is a network designed to learn compressed (encoded) representations of the data in an unsupervised manner. The primary goal is to reconstruct the input at the output, forcing the network to compress the information.
 
-### 5.2. Arquitectura
-1. **Encoder:** transforma los datos de entrada en una representación de menor dimensión (bottleneck).
-2. **Latent Space:** capa intermedia de dimensión reducida.
-3. **Decoder:** intenta reconstruir la entrada original a partir de la representación latente.
+### 5.2. Architecture
+1. **Encoder:** Transforms the input data into a lower-dimensional representation (bottleneck).
+2. **Latent Space:** Intermediate layer of reduced dimension.
+3. **Decoder:** Attempts to reconstruct the original input from the latent representation.
 
-### 5.3. Variantes
-- **Denoising Autoencoder:** se entrena con entradas ruidosas para que aprenda a recuperar la señal limpia.
-- **Variational Autoencoders (VAE):** abordan la generación de datos desde un punto de vista probabilístico.
+### 5.3. Variants
+- **Denoising Autoencoder:** Trained on noisy inputs so it learns to recover the clean signal.
+- **Variational Autoencoders (VAE):** Address data generation from a probabilistic perspective.
 
-### 5.4. Aplicaciones
-- **Reducción de dimensionalidad:** de forma no lineal, a diferencia de PCA.
-- **Detección de anomalías:** si algo es "muy diferente" a los datos de entrenamiento, se reconstruye mal.
-- **Generación de datos:** en VAE, se pueden generar muestras realistas de datos similares a los originales.
+### 5.4. Applications
+- **Dimensionality Reduction:** Non-linear alternative to PCA.
+- **Anomaly Detection:** If something is very different from the training data, it will be poorly reconstructed.
+- **Data Generation:** In VAEs, can generate realistic samples resembling the original data.
 
-### 5.5. Fortalezas y Limitaciones
-- **Ventajas:**
-  - Aprenden sin necesidad de etiquetas.
-  - Útiles para entender la estructura de los datos.
-- **Desventajas:**
-  - Pueden tender a memorizar si la capacidad es alta.
-  - Más complejos que métodos lineales como PCA.
+### 5.5. Strengths and Limitations
+- **Advantages:**
+  - Learn without needing labels.
+  - Useful for understanding the data structure.
+- **Disadvantages:**
+  - May tend to memorize if capacity is high.
+  - More complex than linear methods like PCA.
 
-### 5.7. Preparación de Datos e Inputs
-- **Normalización:** Se suele escalar cada dimensión para que el encoder maneje valores en rangos similares.
-- **Dimensionalidad:** Si se trabaja con imágenes, se vectorizan o se aplican arquitecturas convolucionales (Conv Autoencoder).
-- **Ruido en Denoising Autoencoder:** Se inyecta ruido gaussiano o de "dropout" a la entrada.
-- **Batching:** Como en otras redes, se agrupan ejemplos en lotes.
+### 5.7. Data Preparation and Inputs
+- **Normalization:** Often scale each dimension so the encoder handles values in similar ranges.
+- **Dimensionality:** For images, they can be flattened or we can apply convolutional architectures (Conv Autoencoder).
+- **Noise in Denoising Autoencoder:** Gaussian or "dropout" noise can be injected into the input.
+- **Batching:** As with other networks, group examples in batches.
 
-### 5.8. Ejemplo de Creación de la Red y Entrenamiento en Python
+### 5.8. Example of Network Creation and Training in Python
 ```python
 import numpy as np
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
-# Datos 1000 muestras, 3 features
+# Data: 1000 samples, 3 features
 X_train = np.random.rand(1000, 3)
 
-# Autoencoder con bottleneck en 2D
+# Autoencoder with a 2D bottleneck
 model = Sequential()
 # Encoder
 model.add(Dense(2, activation='relu', input_shape=(3,)))
@@ -305,70 +305,70 @@ model.add(Dense(3, activation='sigmoid'))
 model.compile(optimizer='adam', loss='mse')
 model.fit(X_train, X_train, epochs=5, batch_size=32)
 ```
-1. Se reconstruye la misma entrada.
-2. La capa intermedia de dimensión 2 actúa como "codificación".
-3. Entrenamiento con MSE durante 5 épocas.
+1. Reconstruct the same input.
+2. The intermediate layer of dimension 2 acts as the "encoding."
+3. Trained with MSE for 5 epochs.
 
 ---
 
-## CUADRO 6: Redes Generativas Adversariales (GANs)
+## PANEL 6: Generative Adversarial Networks (GANs)
 
-### 6.1. Definición
-Las GANs constan de dos modelos en competencia:
-1. **Generador (G):** produce datos ficticios que intentan parecerse a los datos reales.
-2. **Discriminador (D):** aprende a distinguir datos reales de los generados.
+### 6.1. Definition
+GANs consist of two competing models:
+1. **Generator (G):** Produces fake data that tries to resemble real data.
+2. **Discriminator (D):** Learns to distinguish real data from generated data.
 
-El juego "minimax" consiste en que G trata de engañar a D, mientras D se vuelve más estricto.
+The "minimax" game is such that G tries to fool D, while D becomes more stringent.
 
-### 6.2. Funcionamiento
-- El **Generador** toma un ruido aleatorio y genera muestras.
-- El **Discriminador** recibe ejemplos (reales y generados) y predice si son reales o falsas.
-- Ambos se entrenan simultáneamente, adaptando sus pesos para optimizar objetivos opuestos.
+### 6.2. How They Work
+- The **Generator** takes random noise and generates samples.
+- The **Discriminator** receives examples (both real and generated) and predicts whether they are real or fake.
+- Both are trained simultaneously, adjusting their weights to optimize opposing objectives.
 
-### 6.3. Aplicaciones
-- **Generación de Imágenes:** producir rostros de personas, paisajes, etc.
-- **Superresolución:** aumentar la calidad de imágenes de baja resolución.
-- **Transferencia de estilo:** convertir una imagen a la "estética" de otra.
-- **Generación de Música y Voz:** sintetizar voces naturales.
+### 6.3. Applications
+- **Image Generation:** Producing faces of people, landscapes, etc.
+- **Super-Resolution:** Enhancing low-resolution images.
+- **Style Transfer:** Converting an image to the "style" of another.
+- **Music and Voice Generation:** Synthesizing natural-sounding voices.
 
-### 6.4. Fortalezas y Limitaciones
-- **Ventajas:**
-  - Generan resultados realistas sin requerir modelos probabilísticos explícitos.
-  - Creatividad en imágenes, audio y más.
-- **Desventajas:**
-  - Entrenamiento inestable, delicado de ajustar.
-  - Puede ocurrir el problema de "mode collapse" (generar muestras similares).
+### 6.4. Strengths and Limitations
+- **Advantages:**
+  - Generate realistic results without requiring explicit probabilistic models.
+  - Creativity in images, audio, and more.
+- **Disadvantages:**
+  - Unstable training, delicate to tune.
+  - "Mode collapse" may occur (generating similar samples).
 
-### 6.6. Preparación de Datos e Inputs
-- **Datos Reales:** Normalmente se normalizan o escalan (en imágenes, entre [-1,1] o [0,1], por ejemplo).
-- **Ruido (Input de Generador):** Se muestrea de distribuciones uniformes, gaussianas, etc.
-- **Estructura de Tensores:** Para imágenes, se usan tensores \((N, C, H, W)\) para el discriminador.
-- **Balance en Batches:** Suele mezclarse un batch de reales con uno de generados en cada iteración.
+### 6.6. Data Preparation and Inputs
+- **Real Data:** Usually normalized or scaled (for images, in [-1,1] or [0,1], for example).
+- **Noise (Generator Input):** Sampled from uniform, Gaussian, or other distributions.
+- **Tensor Structure:** For images, typically \((N, C, H, W)\) for the discriminator.
+- **Batch Balancing:** Usually mixing a batch of real data with generated data in each iteration.
 
-### 6.7. Ejemplo de Creación de la Red y Entrenamiento en Python
+### 6.7. Example of Network Creation and Training in Python
 
-**Ejemplo simplificado (usando Keras):**
+**Simplified example (using Keras):**
 ```python
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
-# Generador
+# Generator
 def build_generator(latent_dim=1):
     model = Sequential()
     model.add(Dense(8, activation='relu', input_shape=(latent_dim,)))
-    model.add(Dense(1, activation='linear'))  # salida 1D
+    model.add(Dense(1, activation='linear'))  # 1D output
     return model
 
-# Discriminador
+# Discriminator
 def build_discriminator():
     model = Sequential()
     model.add(Dense(8, activation='relu', input_shape=(1,)))
     model.add(Dense(1, activation='sigmoid'))
     return model
 
-# Datos reales: y = x + ruido
+# Real data: y = x + noise
 X_real = np.random.uniform(-1, 1, (1000, 1))
 y_real = X_real + np.random.normal(0, 0.05, (1000, 1))
 
@@ -377,7 +377,7 @@ G = build_generator(latent_dim)
 D = build_discriminator()
 D.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
-# GAN combinada
+# Combined GAN
 z = tf.keras.Input(shape=(latent_dim,))
 img = G(z)
 D.trainable = False
@@ -385,85 +385,85 @@ valid = D(img)
 combined = tf.keras.Model(z, valid)
 combined.compile(optimizer='adam', loss='binary_crossentropy')
 
-# Entrenamiento simplificado
+# Simplified training
 batch_size = 32
 for epoch in range(10):
-    # 1) Entrenar D con datos reales
+    # 1) Train D with real data
     idx = np.random.randint(0, X_real.shape[0], batch_size)
     real_samples = y_real[idx]
     D_loss_real = D.train_on_batch(real_samples, np.ones((batch_size, 1)))
 
-    # 2) Entrenar D con datos generados
+    # 2) Train D with generated data
     noise = np.random.uniform(-1, 1, (batch_size, latent_dim))
     fake_samples = G.predict(noise)
     D_loss_fake = D.train_on_batch(fake_samples, np.zeros((batch_size, 1)))
 
-    # 3) Entrenar G (para engañar a D)
+    # 3) Train G (to fool D)
     noise = np.random.uniform(-1, 1, (batch_size, latent_dim))
     G_loss = combined.train_on_batch(noise, np.ones((batch_size, 1)))
 
     if epoch % 2 == 0:
         print(f"Epoch {epoch}: D_loss_real={D_loss_real}, D_loss_fake={D_loss_fake}, G_loss={G_loss}")
 ```
-1. Se definen dos redes (Generador y Discriminador).
-2. Se entrena el Discriminador con muestras reales y falsas, luego se entrena el Generador para engañar al Discriminador.
-3. El ejemplo es muy simplificado, no representa un caso típico de imágenes, pero ilustra el flujo.
+1. Two networks are defined (Generator and Discriminator).
+2. The Discriminator is trained on real and fake samples, then the Generator is trained to fool the Discriminator.
+3. This example is highly simplified and not typical for images, but illustrates the workflow.
 
 ---
 
-## CUADRO 7: Redes Basadas en Atención y Transformers
+## PANEL 7: Attention-Based Networks and Transformers
 
-### 7.1. Definición
-La llegada de los **Transformers** (en el artículo "Attention is all you need" - 2017) revolucionó el procesamiento secuencial y otras áreas, al usar mecanismos de **atención** para modelar relaciones a larga distancia sin recurrencias.
+### 7.1. Definition
+The advent of **Transformers** (in the 2017 paper "Attention is all you need") revolutionized sequential data processing and more, by using **attention** mechanisms to model long-range dependencies without recurrence.
 
-### 7.2. Mecanismo de Auto-Atención
-Permite que cada "token" o elemento en la secuencia preste atención a cada otro, calculando pesos de relevancia. Así, se capturan dependencias distantes de manera más efectiva que con RNN.
+### 7.2. Self-Attention Mechanism
+Allows each "token" or sequence element to attend to every other, computing relevance weights. Thus, distant dependencies are captured more effectively than with RNNs.
 
-### 7.3. Arquitectura
-1. **Encoder:** varias capas de auto-atención y redes feedforward.
-2. **Decoder:** similar al encoder, pero con atención "enmascarada" para predecir secuencias paso a paso.
-3. **Positional Encoding:** agrega información sobre la posición de cada token.
+### 7.3. Architecture
+1. **Encoder:** Multiple layers of self-attention and feedforward networks.
+2. **Decoder:** Similar to the encoder, but with "masked" attention to predict sequences step by step.
+3. **Positional Encoding:** Adds information about the position of each token.
 
-### 7.4. Aplicaciones
+### 7.4. Applications
 - **NLP:**
-  - Modelos de lenguaje (GPT, BERT, T5).
-  - Traducción y resumen automático.
-- **Vision Transformers (ViT):** clasificación de imágenes, detección.
-- **AlphaFold:** Plegamiento de proteínas.
+  - Language models (GPT, BERT, T5).
+  - Automatic translation and summarization.
+- **Vision Transformers (ViT):** Image classification, detection.
+- **AlphaFold:** Protein folding.
 
-### 7.5. Fortalezas y Limitaciones
-- **Ventajas:**
-  - Gran capacidad para capturar dependencias a largo plazo.
-  - Procesamiento paralelo de tokens.
-- **Desventajas:**
-  - Complejidad O(n^2) en la longitud de la secuencia.
-  - Requiere mucha memoria y potencia de cómputo.
+### 7.5. Strengths and Limitations
+- **Advantages:**
+  - Great capacity to capture long-distance dependencies.
+  - Parallel token processing.
+- **Disadvantages:**
+  - Complexity O(n^2) in sequence length.
+  - Requires large memory and computing power.
 
-### 7.7. Preparación de Datos e Inputs
-- **Tokenización de Texto:** Separar el texto en tokens y transformarlos en vectores (por ejemplo, con embeddings).
-- **Positional Encoding:** Se añade un vector de posición (sinusoidal o trainable) para cada token.
-- **Máscaras:** En problemas de traducción o secuencias, se enmascaran tokens futuros o posiciones inexistentes.
-- **Batching y Padding:** Igual que en RNN, se unifican longitudes y se aplican máscaras donde no hay contenido.
-- **Vision Transformers:** Dividen la imagen en parches, cada uno se vectoriza y se añade un embedding posicional.
+### 7.7. Data Preparation and Inputs
+- **Text Tokenization:** Split text into tokens and transform them into vectors (e.g., embeddings).
+- **Positional Encoding:** A sinusoidal or trainable position vector is added for each token.
+- **Masking:** For translation or sequences, mask future tokens or non-existent positions.
+- **Batching and Padding:** As with RNNs, unify sequence lengths and apply masks where no content exists.
+- **Vision Transformers:** Divide the image into patches, each patch is vectorized, and a positional embedding is added.
 
-### 7.8. Ejemplo de Creación de la Red y Entrenamiento en Python
+### 7.8. Example of Network Creation and Training in Python
 
-**Ejemplo con la API de Keras para un Transformer simple (versión simplificada):**
+**Example with the Keras API for a simple Transformer (simplified version):**
 ```python
 import tensorflow as tf
 from tensorflow.keras import layers
 
-# Ejemplo simplificado: supongamos secuencias de 10 tokens, vocabulario de 1000.
+# Simplified example: suppose sequences of 10 tokens, vocab of 1000.
 max_len = 10
 vocab_size = 1000
-embed_dim = 32  # dimensión de embedding
+embed_dim = 32  # embedding dimension
 
-inputs = tf.keras.Input(shape=(max_len,))  # asumiendo entradas tokenizadas
+inputs = tf.keras.Input(shape=(max_len,))  # assuming tokenized inputs
 
 # Embedding
 x = layers.Embedding(vocab_size, embed_dim)(inputs)
 
-# Pequeña capa de atención (Self-Attention)
+# Small attention layer (Self-Attention)
 attn_output = layers.MultiHeadAttention(num_heads=2, key_dim=embed_dim)(x, x)
 x = x + attn_output  # Residual
 x = layers.LayerNormalization()(x)
@@ -474,14 +474,14 @@ ff = layers.Dense(embed_dim)(ff)
 x = x + ff
 x = layers.LayerNormalization()(x)
 
-# Salida final (por ejemplo, para clasificación de 5 clases)
+# Final output (e.g., for classification into 5 classes)
 x = layers.Flatten()(x)
 outputs = layers.Dense(5, activation='softmax')(x)
 
 model = tf.keras.Model(inputs, outputs)
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
 
-# Datos sintéticos
+# Synthetic data
 import numpy as np
 X_train = np.random.randint(0, vocab_size, size=(1000, max_len))
 y_train = np.random.randint(0, 5, size=(1000,))
@@ -491,44 +491,44 @@ y_train_onehot = tf.keras.utils.to_categorical(y_train, num_classes=5)
 
 model.fit(X_train, y_train_onehot, epochs=3, batch_size=32)
 ```
-1. Definimos un modelo con embedding, MultiHeadAttention y una pequeña red feedforward (Transformer block simplificado).
-2. Se generan datos sintéticos (1000 secuencias, cada una de longitud 10).
-3. Se entrena por 3 épocas.
+1. A model is defined with embedding, MultiHeadAttention, and a small feedforward (simplified Transformer block).
+2. Synthetic data is generated (1000 sequences, each of length 10).
+3. Trained for 3 epochs.
 
 ---
 
-## CUADRO 8: Otras Redes Neuronales Especializadas
+## PANEL 8: Other Specialized Neural Networks
 
-### 8.1. Redes de Funciones de Base Radial (RBF)
-- **Uso de funciones de base radial** (típicamente Gaussiana) como activación.
-- Se pueden interpretar como redes con una capa de características en medio.
-- **Aplicaciones:** aproximación de funciones, problemas de control.
+### 8.1. Radial Basis Function Networks (RBF)
+- **Use of radial basis functions** (often Gaussian) as activation.
+- Can be interpreted as networks with a hidden feature layer.
+- **Applications:** function approximation, control problems.
 
-### 8.4. Redes Neuronales de Grafos (GNN)
-- Diseñadas para datos con estructura de grafo (nodos, aristas).
-- **Aplicaciones:** análisis de redes sociales, química computacional, sistemas de recomendación y ruteo.
+### 8.4. Graph Neural Networks (GNN)
+- Designed for data with graph structure (nodes, edges).
+- **Applications:** social network analysis, computational chemistry, recommendation systems, routing.
 
-**Idea Principal:** Cada nodo aprende una representación a partir de sus vecinos y las conexiones iterativamente.
+**Main Idea:** Each node learns a representation from its neighbors and connections iteratively.
 
-### 8.5. Redes Neuronales de Picos (Spiking Neural Networks, SNN)
-- Inspiradas en el cerebro biológico, usan "spikes" (eventos discretos) en lugar de valores continuos.
-- **Aplicaciones:** computación neuromórfica, sistemas de bajo consumo.
+### 8.5. Spiking Neural Networks (SNN)
+- Inspired by biological brains, using "spikes" (discrete events) instead of continuous values.
+- **Applications:** neuromorphic computing, low-power systems.
 
 ### 8.6. Capsule Networks
-- Propuestas por Geoffrey Hinton para superar limitaciones de CNN al reconocer poses y composiciones.
-- Una "cápsula" agrupa neuronas y modela una entidad y su relación espacial.
+- Proposed by Geoffrey Hinton to overcome some CNN limitations in recognizing poses and compositions.
+- A "capsule" groups neurons and models an entity and its spatial relationship.
 
-### 8.7. Preparación de Datos e Inputs en Redes Especializadas
-- **RBF:** Habitualmente se normaliza el espacio de entrada para facilitar la definición de \(c_i\) y \(\gamma\).
-- **SOM:** Se vectoriza cada dato de entrada y se "presenta" al mapa; importante escalar/normalizar para que la distancia sea representativa.
-- **RBM/DBN:** Para datos binarios (0/1) o escalados a [0,1], se alimentan como vectores. En caso de imágenes, se aplanan a 1D.
-- **GNN:** Se define un grafo (nodos, aristas) y se crean vectores iniciales para cada nodo. La entrada se pasa a capas que hacen "propagación de mensajes".
-- **SNN:** Se codifican estímulos continuos en secuencias de "spikes"; requiere un preprocesamiento específico (ej. codificación rate-based o temporal).
-- **Capsule Networks:** Para imágenes, se suelen usar pequeñas "patches" como inputs iniciales a las cápsulas.
+### 8.7. Data Preparation and Inputs in Specialized Networks
+- **RBF:** Typically normalize the input space to facilitate definition of \(c_i\) and \(\gamma\).
+- **SOM:** Each input is vectorized and presented to the map; important to scale/normalize so distance is meaningful.
+- **RBM/DBN:** For binary (0/1) or scaled [0,1] data, input as vectors. In the case of images, flatten to 1D.
+- **GNN:** Define a graph (nodes, edges) and create initial node vectors. Data is passed to layers performing “message passing.”
+- **SNN:** Convert continuous stimuli into spike sequences; requires specific preprocessing (e.g., rate-based or temporal coding).
+- **Capsule Networks:** For images, typically use small patches as initial inputs to the capsules.
 
-### 8.8. Ejemplo de Creación y Entrenamiento en Python
+### 8.8. Example of Creation and Training in Python
 
-Dado que estas arquitecturas especializadas suelen requerir librerías y técnicas específicas, aquí va un ejemplo muy básico (no oficial) de una RBM en Python (pseudo-implementación):
+Because these specialized architectures often require specific libraries and techniques, here’s a very basic (non-official) example of an RBM in Python (pseudo-implementation):
 ```python
 import numpy as np
 
@@ -537,16 +537,16 @@ class RBM:
         self.n_visible = n_visible
         self.n_hidden = n_hidden
         self.lr = lr
-        # Inicializar pesos
+        # Initialize weights
         self.W = np.random.normal(0, 0.1, size=(n_visible, n_hidden))
-        self.b = np.zeros(n_visible)  # bias visibles
-        self.c = np.zeros(n_hidden)   # bias ocultos
+        self.b = np.zeros(n_visible)  # visible biases
+        self.c = np.zeros(n_hidden)   # hidden biases
 
     def sigmoid(self, x):
         return 1.0 / (1.0 + np.exp(-x))
 
     def sample_hidden(self, v):
-        # Prob ocultas
+        # Hidden probabilities
         h_prob = self.sigmoid(np.dot(v, self.W) + self.c)
         return (np.random.rand(*h_prob.shape) < h_prob).astype(np.float32)
 
@@ -558,37 +558,38 @@ class RBM:
         h0 = self.sample_hidden(v)
         v1 = self.sample_visible(h0)
         h1 = self.sample_hidden(v1)
-        # Actualizar pesos
-        # v*h.T - v1*h1.T (promedio)
+        # Update weights
+        # v*h.T - v1*h1.T (average)
         dW = np.dot(v.reshape(-1,1), h0.reshape(1,-1)) - np.dot(v1.reshape(-1,1), h1.reshape(1,-1))
         self.W += self.lr * dW
         self.b += self.lr * (v - v1)
         self.c += self.lr * (h0 - h1)
 
-# Ejemplo de uso
+# Example usage
 rbm = RBM(n_visible=6, n_hidden=3, lr=0.1)
-X_train = np.random.randint(0,2,size=(100,6))  # 100 muestras binarias de 6 bits
+X_train = np.random.randint(0,2,size=(100,6))  # 100 binary samples of 6 bits
 
-# Entrenamiento simple
+# Simple training
 for epoch in range(5):
     for x in X_train:
         rbm.contrastive_divergence(x)
 ```
-Es un ejemplo mínimo, no optimizado ni verificado, que muestra la idea de Contrastive Divergence para entrenar una RBM.
+This is a minimal, unoptimized, unverified example showing the idea of Contrastive Divergence for training an RBM.
 
 ---
 
-# Conclusión del Lienzo
+# Canvas Conclusion
 
-Este **lienzo extenso** abarca las arquitecturas de redes neuronales más influyentes hasta la fecha. Aunque existen muchas otras variantes y se proponen nuevas ideas constantemente, las descritas aquí forman los pilares fundamentales del **aprendizaje profundo** y sirven de guía para elegir la mejor herramienta en función del problema:
+This **extensive canvas** covers the most influential neural network architectures to date. Although many other variations exist and new ideas are constantly proposed, those described here form the fundamental pillars of **deep learning** and serve as a guide to choose the best tool depending on the problem:
 
-1. **MLP/FNN:** si no hay estructura espacial o secuencial clara.
-2. **CNN:** tareas de visión o señales estructuradas.
-3. **RNN/LSTM/GRU:** secuencias y dependencias temporales.
-4. **Transformers:** secuencias largas o contextos complejos en NLP y visión.
-5. **Autoencoders:** aprendizaje no supervisado, compresión, generación.
-6. **GANs:** generación de datos, aumento de datos.
-7. **Otras especializadas (SOM, GNN, etc.):** dominios específicos con estructuras únicas.
+1. **MLP/FNN:** if there is no clear spatial or sequential structure.
+2. **CNN:** for vision tasks or structured signals.
+3. **RNN/LSTM/GRU:** for sequences and temporal dependencies.
+4. **Transformers:** for long sequences or complex contexts in NLP and vision.
+5. **Autoencoders:** unsupervised learning, compression, generation.
+6. **GANs:** data generation, data augmentation.
+7. **Others (SOM, GNN, etc.):** specialized domains with unique structures.
 
-La **combinación** de diferentes arquitecturas y la **creatividad** en su uso sigue impulsando el campo de la inteligencia artificial hacia nuevas fronteras.
+The **combination** of different architectures and **creativity** in their use continues to propel the field of artificial intelligence to new frontiers.
+
 
