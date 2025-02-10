@@ -1,5 +1,7 @@
 # NN_Explained
 
+In this repository, i've made a compilation of the most used NN models. You have access to a brief explanation of a bunch of these neural network models as well as some Python code that you can run to train and test them all, enjoy!
+
 # Extensive Conceptual Canvas: Neural Network Architectures and Their Applications
 
 Imagine a large canvas (or mural) divided into different sections (panels). Each section is dedicated to exploring a type of neural network, delving into its operational principles, components, advantages, disadvantages, **applications**, **mathematical definitions**, **step-by-step examples**, **how to prepare the data**, and now also **basic Python implementation examples** (using Keras, part of TensorFlow).
