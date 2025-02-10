@@ -12,6 +12,9 @@ Imagine a large canvas (or mural) divided into different sections (panels). Each
 Feedforward Neural Networks (FNN), also known as **Multilayer Perceptron (MLP)**, are the most classic and basic form of neural networks. In these networks, information flows in a single direction: from the input layer, through one or more hidden layers, to the output layer.
 
 ### 1.2. Architecture
+flowchart LR
+    A[Input Layer] --> B[Hidden Layer(s)]
+    B --> C[Output Layer]
 1. **Input Layer:** Receives the input data (features). For example, in a digit classification problem, each pixel might be a neuron in the input layer.
 2. **Hidden Layers:** One or more layers that perform intermediate transformations on the data. Each neuron in these layers computes a weighted sum of its inputs, followed by an activation function (sigmoid, tanh, ReLU, etc.).
 3. **Output Layer:** Produces the final prediction. For instance, in a binary classification problem, it could be a single neuron with a sigmoid activation, while in a multi-class classification, a softmax is used.
