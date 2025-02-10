@@ -200,60 +200,59 @@ donde \(b\) es un sesgo asociado al filtro.
 **Paso 2: Ejemplo Simplificado**
 
 Suponiendo:
-- Una imagen en escala de grises (\(C = 1\)) de tamaño 3x3:
-  \(
-   X = \begin{pmatrix}
-   1 & 2 & 3\\
-   4 & 5 & 6\\
-   7 & 8 & 9
-   \end{pmatrix}.
-  \)
-- Filtro (kernel) de tamaño 2x2 (\(k_h = 2, k_w = 2\)):
-  \(
-   F = \begin{pmatrix}
-   1 & 0\\
-   0 & -1
-   \end{pmatrix}, \quad b = 0.
-  \)
-- Stride = 1, sin padding.
 
-La salida \(Y\) tendrá dimensión 2x2 (para cada posición del filtro en la imagen). Los cálculos:
-1. **Posición (fila=1, col=1)**: \(
-     X_{\text{sub}} = \begin{pmatrix} 1 & 2\\ 4 & 5 \end{pmatrix}.
-   \)
-   \(
-     y_{1,1} = 1*1 + 0*2 + 0*4 + (-1)*5 = 1 - 5 = -4.
-   \)
-2. **Posición (fila=1, col=2)**:
-   \(
-     X_{\text{sub}} = \begin{pmatrix} 2 & 3\\ 5 & 6 \end{pmatrix},
-   \)
-   \(
-     y_{1,2} = 1*2 + 0*3 + 0*5 + (-1)*6 = 2 - 6 = -4.
-   \)
-3. **Posición (fila=2, col=1)**:
-   \(
-     X_{\text{sub}} = \begin{pmatrix} 4 & 5\\ 7 & 8 \end{pmatrix},
-   \)
-   \(
-     y_{2,1} = 1*4 + 0*5 + 0*7 + (-1)*8 = 4 - 8 = -4.
-   \)
-4. **Posición (fila=2, col=2)**:
-   \(
-     X_{\text{sub}} = \begin{pmatrix} 5 & 6\\ 8 & 9 \end{pmatrix},
-   \)
-   \(
-     y_{2,2} = 1*5 + 0*6 + 0*8 + (-1)*9 = 5 - 9 = -4.
-   \)
+Una imagen en escala de grises \((C = 1)\) de tamaño \(3 \times 3\):
+\[
+X = \begin{pmatrix}
+1 & 2 & 3 \\
+4 & 5 & 6 \\
+7 & 8 & 9
+\end{pmatrix}
+\]
 
-Así, el mapa de características resultante \(Y\) es:
-\(
-  Y = \begin{pmatrix}
-  -4 & -4 \\
-  -4 & -4
-  \end{pmatrix}.
-\)
+Filtro (kernel) de tamaño \(2 \times 2\) \((k_h = 2, k_w = 2)\):
+\[
+F = \begin{pmatrix}
+1 & 0 \\
+0 & -1
+\end{pmatrix}, \quad b = 0.
+\]
 
+Stride = 1, sin padding.
+
+La salida \(Y\) tendrá dimensión \(2 \times 2\) (para cada posición del filtro en la imagen). Los cálculos:
+
+- **Posición (fila=1, col=1):**
+  \[
+  X_{\text{sub}} = \begin{pmatrix}
+  1 & 2 \\
+  4 & 5
+  \end{pmatrix}, \quad y_{1,1} = 1\cdot1 + 0\cdot2 + 0\cdot4 + (-1)\cdot5 = 1 - 5 = -4.
+  \]
+
+- **Posición (fila=1, col=2):**
+  \[
+  X_{\text{sub}} = \begin{pmatrix}
+  2 & 3 \\
+  5 & 6
+  \end{pmatrix}, \quad y_{1,2} = 1\cdot2 + 0\cdot3 + 0\cdot5 + (-1)\cdot6 = 2 - 6 = -4.
+  \]
+
+- **Posición (fila=2, col=1):**
+  \[
+  X_{\text{sub}} = \begin{pmatrix}
+  4 & 5 \\
+  7 & 8
+  \end{pmatrix}, \quad y_{2,1} = 1\cdot4 + 0\cdot5 + 0\cdot7 + (-1)\cdot8 = 4 - 8 = -4.
+  \]
+
+- **Posición (fila=2, col=2):**
+  \[
+  X_{\text{sub}} = \begin{pmatrix}
+  5 & 6 \\
+  8 & 9
+  \end{pmatrix}, \quad y_{2,2} = 1\cdot5 + 0\cdot6 + 0\cdot8 + (-1)\cdot9 = 5 - 9 = -4.
+  \]
 Este ejemplo demuestra cómo se lleva a cabo la operación de convolución en un caso muy sencillo.
 
 ### 2.7. Preparación de Datos e Inputs
