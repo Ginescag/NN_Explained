@@ -580,7 +580,7 @@ This is a minimal, unoptimized, unverified example showing the idea of Contrasti
 
 ---
 
-# Canvas Conclusion
+# Conclusion
 
 This **extensive canvas** covers the most influential neural network architectures to date. Although many other variations exist and new ideas are constantly proposed, those described here form the fundamental pillars of **deep learning** and serve as a guide to choose the best tool depending on the problem:
 
