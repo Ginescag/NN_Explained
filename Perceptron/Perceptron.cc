@@ -1,4 +1,3 @@
-#include <GL/glut.h>
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -83,101 +82,78 @@ class Perceptron {
         }
 };
 
-// Global variables for visualization
-vector<vector<double>> points;
-vector<int> labels;
-vector<bool> correct_guesses;
-    Perceptron perceptron;
-int current_iteration = 0;
-const int TRAINING_POINTS = 100;
-const int ITERATIONS = 100;
 
-void display() {
-    glClear(GL_COLOR_BUFFER_BIT);
+
+int main() {
+    srand(static_cast<unsigned>(time(0)));
+    Perceptron p;
     
-    // Draw coordinate axes
-    glColor3f(0.5, 0.5, 0.5);
-    glBegin(GL_LINES);
-        glVertex2f(-1.0, 0.0);
-        glVertex2f(1.0, 0.0);
-        glVertex2f(0.0, -1.0);
-        glVertex2f(0.0, 1.0);
-    glEnd();
+    // Training parameters
+    const int TRAINING_POINTS = 250;
+    const int ITERATIONS = 100;
+    
+    // Function to determine if a point is above or below the line y = x
+    auto classify_point = [](double x, double y) -> int {
+        // Returns 1 if point is above the line y = x, -1 if below
+        return y > x ? 1 : -1;
+    };
 
-    // Draw target line (y = 2x)
-    glColor3f(0.0, 0.0, 0.0);
-    glBegin(GL_LINES);
-        glVertex2f(-1.0, -2.0);
-        glVertex2f(1.0, 2.0);
-    glEnd();
-
-    // Draw points
-    glPointSize(5.0);
-    for(size_t i = 0; i < points.size(); i++) {
-        if(current_iteration > 0) {
-            if(correct_guesses[i]) {
-                glColor3f(0.0, 1.0, 0.0);  // Green for correct
-            } else {
-                glColor3f(1.0, 0.0, 0.0);  // Red for incorrect
-            }
-        } else {
-            glColor3f(0.0, 0.0, 0.0);  // Black for initial state
-        }
-
-        glBegin(GL_POINTS);
-            glVertex2f(points[i][0]/3.0, points[i][1]/3.0);  // Scale down to fit in [-1,1]
-        glEnd();
+    // Generate training points
+    vector<vector<double>> points;
+    vector<int> labels;
+    
+    cout << "Training points:" << endl;
+    for(int i = 0; i < TRAINING_POINTS; i++) {
+        double x = (rand() / double(RAND_MAX)) * 8 - 4;  // x between -4 and 4
+        double y = (rand() / double(RAND_MAX)) * 8 - 4;  // y between -4 and 4
+        points.push_back({x, y});
+        labels.push_back(classify_point(x, y));
+        cout << "Point " << i << ": (" << x << ", " << y << ") -> " 
+             << (labels[i] == 1 ? "Above" : "Below") << endl;
     }
 
-    glutSwapBuffers();
-}
-
-void keyboard(unsigned char key, int x, int y) {
-    if(key == ' ' && current_iteration < ITERATIONS) {
-        // Train one iteration
+    cout << "\nTraining start:" << endl;
+    cout << "Initial state:" << endl;
+    p.printP();
+    cout << "------------------------" << endl;
+    
+    for(int i = 0; i < ITERATIONS; i++) {
         int correct_predictions = 0;
+        
+        // Train with all points
         for(int j = 0; j < TRAINING_POINTS; j++) {
-            int guess = perceptron.guess(points[j]);
-            correct_guesses[j] = (guess == labels[j]);
-            if(correct_guesses[j]) correct_predictions++;
-            perceptron.train(points[j], labels[j]);
+            if(p.guess(points[j]) == labels[j]) {
+                correct_predictions++;
+            }
+            p.train(points[j], labels[j]);
         }
 
         double accuracy = (correct_predictions * 100.0) / TRAINING_POINTS;
-        cout << "Iteration " << current_iteration + 1 << ": " << accuracy << "%" << endl;
-        perceptron.printP();
-        current_iteration++;
-        
-        glutPostRedisplay();
-    }
-}
+        cout << "\nIteration " << i + 1 << ":" << endl;
+        cout << "Accuracy: " << accuracy << "%" << endl;
+        p.printP();
+        cout << "------------------------" << endl;
 
-int main(int argc, char** argv) {
-    srand(static_cast<unsigned>(time(0)));
-    
-    // Generate training data
-    correct_guesses.resize(TRAINING_POINTS);
-    for(int i = 0; i < TRAINING_POINTS; i++) {
-        double x = (rand() / double(RAND_MAX)) * 6 - 3;
-        double y = (rand() / double(RAND_MAX)) * 6 - 3;
-        points.push_back({x, y});
-        labels.push_back(y > 2 * x ? 1 : -1);
+        if(correct_predictions == TRAINING_POINTS) {
+            cout << "\nPerfect accuracy achieved!" << endl;
+            break;
+        }
     }
 
-    // Initialize GLUT
-    glutInit(&argc, argv);
-    glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB);
-    glutInitWindowSize(800, 800);
-    glutCreateWindow("Perceptron Learning");
+    // Test with specific points
+    cout << "\nTesting new points:" << endl;
+    vector<vector<double>> test_points = {
+        {1, 2},    // Should be above line (positive)
+        {2, 1},    // Should be below line (negative)
+        {-2, -1},  // Should be above line (positive)
+        {-1, -2}   // Should be below line (negative)
+    };
 
-    // Set white background
-    glClearColor(1.0, 1.0, 1.0, 1.0);
+    for(const auto& point : test_points) {
+        int result = p.guess(point);
+        cout << "Point (" << point[0] << "," << point[1] << "): " 
+             << (result == 1 ? "Above" : "Below") << " y=x" << endl;
+    }
 
-    // Register callbacks
-    glutDisplayFunc(display);
-    glutKeyboardFunc(keyboard);
-
-    // Start main loop
-    glutMainLoop();
     return 0;
 }
