@@ -102,6 +102,8 @@ int main() {
     vector<vector<double>> points;
     vector<int> labels;
     
+    p.printP();
+
     cout << "Training points:" << endl;
     for(int i = 0; i < TRAINING_POINTS; i++) {
         double x = (rand() / double(RAND_MAX)) * 8 - 4;  // x between -4 and 4
@@ -133,6 +135,8 @@ int main() {
         cout << "Accuracy: " << accuracy << "%" << endl;
         p.printP();
         cout << "------------------------" << endl;
+        
+        
 
         if(correct_predictions == TRAINING_POINTS) {
             cout << "\nPerfect accuracy achieved!" << endl;
@@ -140,20 +144,20 @@ int main() {
         }
     }
 
-    // Test with specific points
-    cout << "\nTesting new points:" << endl;
-    vector<vector<double>> test_points = {
-        {1, 2},    // Should be above line (positive)
-        {2, 1},    // Should be below line (negative)
-        {-2, -1},  // Should be above line (positive)
-        {-1, -2}   // Should be below line (negative)
-    };
+    // // Test with specific points
+    // cout << "\nTesting new points:" << endl;
+    // vector<vector<double>> test_points = {
+    //     {1, 2},    // Should be above line (positive)
+    //     {2, 1},    // Should be below line (negative)
+    //     {-2, -1},  // Should be above line (positive)
+    //     {-1, -2}   // Should be below line (negative)
+    // };
 
-    for(const auto& point : test_points) {
-        int result = p.guess(point);
-        cout << "Point (" << point[0] << "," << point[1] << "): " 
-             << (result == 1 ? "Above" : "Below") << " y=x" << endl;
-    }
+    // for(const auto& point : test_points) {
+    //     int result = p.guess(point);
+    //     cout << "Point (" << point[0] << "," << point[1] << "): " 
+    //          << (result == 1 ? "Above" : "Below") << " y=x" << endl;
+    // }
 
     return 0;
 }
