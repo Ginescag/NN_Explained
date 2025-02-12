@@ -1,8 +1,9 @@
 #include <iostream>
-#include <cmath>
+#include <  cmath>
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+
 
 using namespace std;
 
@@ -15,14 +16,27 @@ using namespace std;
 
 //the MLP class is the main class that contains the functions to train the network and predict the output
 
-
+int sigmoid(double x){
+    return 1/(1+exp(-x));
+}
 class MLP
 {
     private:
         double learning_rate; //learning rate is the step size at which the weights are updated
         double bias; //bias is the constant value that is added to the weighted sum of the inputs
         int input_nodes; //number of input nodes
-        int hidden_nodes; //number of hidden nodes
+        int hidden_layers; //number of hidden layers
+        int nodes_per_hidden_layer; //number of nodes per hidden layer
         int output_nodes; //number of output nodes
+
+
+
+    public:
+        MLP(const int& inputN, const int& NhiddenL, const int& outputN, const int& hiddenN){
+            this -> input_nodes = inputN;
+            this -> nodes_per_hidden_layer = hiddenN;
+            this -> hidden_layers = NhiddenL;
+            this -> output_nodes = outputN;
+        }
 
 };
