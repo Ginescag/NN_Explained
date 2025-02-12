@@ -12,6 +12,7 @@ obj/
 *.obj
 *.lo
 *.la
+*.Train
 
 # Bibliotecas (dinámicas y estáticas)
 *.so
