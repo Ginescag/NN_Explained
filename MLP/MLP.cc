@@ -1,11 +1,14 @@
 #include <iostream>
-#include <  cmath>
+#include <cmath>
 #include <vector>
 #include <ctime>
 #include <cstdlib>
-
+#include "../Matrix/matrix.h"
 
 using namespace std;
+
+//g++ -g -Iinclude MLP/MLP.cc Matrix/matrix.o -o MLP
+
 
 //a Multilayer Perceptron is a type of feedforward artificial neural network that 
 //consists of at least three layers of nodes: an input layer, a hidden layer and an output layer.
