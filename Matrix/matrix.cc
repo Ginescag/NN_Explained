@@ -62,6 +62,14 @@ void Matrix::add(const Matrix& m){
     }
 }
 
+void Matrix::addScalar(const double& s){
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            this->matrix[i][j] += s;
+        }
+    }
+}
+
 void Matrix::subtract(const Matrix& m){
     if(this->rows != m.rows || this->cols != m.cols){
         cout << "Error: matrices must have the same dimensions" << endl;
@@ -70,6 +78,14 @@ void Matrix::subtract(const Matrix& m){
     for(int i = 0; i < this->rows; i++){
         for(int j = 0; j < this->cols; j++){
             this->matrix[i][j] -= m.matrix[i][j];
+        }
+    }
+}
+
+void Matrix::subtractScalar(const double& s){
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            this->matrix[i][j] -= s;
         }
     }
 }
@@ -90,6 +106,41 @@ Matrix Matrix::dot(const Matrix& m){
         }
     }
     return result;
+}
+
+Matrix Matrix::hadamard(const Matrix& m){
+    if(this->rows != m.rows || this->cols != m.cols){
+        cout << "Error: matrices must have the same dimensions" << endl;
+        return Matrix(0, 0);
+    }
+    Matrix result(this->rows, this->cols);
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            result.matrix[i][j] = this->matrix[i][j] * m.matrix[i][j];
+        }
+    }
+    return result;
+}
+
+void Matrix::scalarMultiply(const double& s){
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            this->matrix[i][j] *= s;
+        }
+    }
+}
+
+void Matrix::transpose(){
+    vector<vector<double>> newMatrix(this->cols, vector<double>(this->rows, 0));
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            newMatrix[j][i] = this->matrix[i][j];
+        }
+    }
+    this->matrix = newMatrix;
+    int temp = this->rows;
+    this->rows = this->cols;
+    this->cols = temp;
 }
 
 void Matrix::fillInRange(const double& bottom, const double& top) {

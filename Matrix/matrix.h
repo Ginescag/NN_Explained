@@ -34,9 +34,19 @@ class Matrix{
 
         void add(const Matrix& m);
 
+        void addScalar(const double& s);
+
         void subtract(const Matrix& m);
 
+        void subtractScalar(const double& s);
+
         Matrix dot(const Matrix& m);
+
+        void scalarMultiply(const double& s);
+
+        Matrix hadamard(const Matrix& m);
+
+        void transpose();
 
         void fillInRange(const double& bottom, const double& top);
 };

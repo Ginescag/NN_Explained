@@ -18,6 +18,8 @@ using namespace std;
 //XOR is a simple example to demonstrate the working of the MLP, as it is a non-linear function
 
 //the MLP class is the main class that contains the functions to train the network and predict the output
+//to simplify the implementation, this model will only have 2 hidden layers and only use the sigmoid activation function
+
 
 int sigmoid(double x){
     return 1/(1+exp(-x));
