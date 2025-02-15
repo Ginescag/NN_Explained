@@ -50,6 +50,8 @@ class Matrix{
 
         void map(double (*func)(double));
 
+        void randomize();
+
         void fillInRange(const double& bottom, const double& top);
 };
 

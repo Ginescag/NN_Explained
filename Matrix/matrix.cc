@@ -148,6 +148,15 @@ void Matrix::map(double (*func)(double)){
     }
 }
 
+void Matrix::randomize(){
+    srand(time(0));
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            this->matrix[i][j] = ((double)rand() / RAND_MAX) * 2 - 1;
+        }
+    }
+}
+
 void Matrix::fillInRange(const double& bottom, const double& top) {
     for(int i = 0; i < this->rows; i++) {
         for(int j = 0; j < this->cols; j++) {

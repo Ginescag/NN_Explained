@@ -33,8 +33,11 @@ class MLP
         vector<int> hidden_layers; //vector with the number of nodes in each hidden layer
         int output_nodes; //number of output nodes
         double (*activation_function)(double);
+        vector<Matrix> weights; //vector of matrices that contain the weights of the network, first matrix is the weights between the input layer and the first hidden layer, last matrix is the weights between the last hidden layer and the output layer
 
     public:
+
+        //this needs some more logic as pushing back a new hidden layer will fuck up the weigths vector (not implementing it anytime soon)
         void addLayer(int nodes){
             hidden_layers.push_back(nodes);
         }
@@ -46,9 +49,22 @@ class MLP
             hidden_layers = h;
             output_nodes = out;
             activation_function = activation;
+
+            this->weights.push_back(Matrix(hidden_layers[0], input_nodes));
+
+            for(int i = 1; i < hidden_layers.size(); i++){
+                this->weights.push_back(Matrix(hidden_layers[i], hidden_layers[i-1]));
+            }
+
+            this->weights.push_back(Matrix(output_nodes, hidden_layers[hidden_layers.size()-1]));
+
+            for(int i = 0; i < weights.size(); i++){
+                weights[i].randomize();
+            }
+            
+
         }
 
-        
 
 
 };
