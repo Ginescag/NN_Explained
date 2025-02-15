@@ -130,17 +130,22 @@ void Matrix::scalarMultiply(const double& s){
     }
 }
 
-void Matrix::transpose(){
-    vector<vector<double>> newMatrix(this->cols, vector<double>(this->rows, 0));
+Matrix Matrix::transpose(){
+    Matrix result(this->cols, this->rows);
     for(int i = 0; i < this->rows; i++){
         for(int j = 0; j < this->cols; j++){
-            newMatrix[j][i] = this->matrix[i][j];
+            result.matrix[j][i] = this->matrix[i][j];
         }
     }
-    this->matrix = newMatrix;
-    int temp = this->rows;
-    this->rows = this->cols;
-    this->cols = temp;
+    return result;
+}
+
+void Matrix::map(double (*func)(double)){
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            this->matrix[i][j] = func(this->matrix[i][j]);
+        }
+    }
 }
 
 void Matrix::fillInRange(const double& bottom, const double& top) {

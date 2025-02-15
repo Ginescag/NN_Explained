@@ -46,7 +46,9 @@ class Matrix{
 
         Matrix hadamard(const Matrix& m);
 
-        void transpose();
+        Matrix transpose();
+
+        void map(double (*func)(double));
 
         void fillInRange(const double& bottom, const double& top);
 };

@@ -30,18 +30,25 @@ class MLP
         double learning_rate; //learning rate is the step size at which the weights are updated
         double bias; //bias is the constant value that is added to the weighted sum of the inputs
         int input_nodes; //number of input nodes
-        int hidden_layers; //number of hidden layers
-        int nodes_per_hidden_layer; //number of nodes per hidden layer
+        vector<int> hidden_layers; //vector with the number of nodes in each hidden layer
         int output_nodes; //number of output nodes
-
-
+        double (*activation_function)(double);
 
     public:
-        MLP(const int& inputN, const int& NhiddenL, const int& outputN, const int& hiddenN){
-            this -> input_nodes = inputN;
-            this -> nodes_per_hidden_layer = hiddenN;
-            this -> hidden_layers = NhiddenL;
-            this -> output_nodes = outputN;
+        void addLayer(int nodes){
+            hidden_layers.push_back(nodes);
         }
+
+        MLP(double lr, double b, int in, vector<int> h, double out, double (*activation)(double)){
+            learning_rate = lr;
+            bias = b;
+            input_nodes = in;
+            hidden_layers = h;
+            output_nodes = out;
+            activation_function = activation;
+        }
+
+        
+
 
 };
