@@ -22,6 +22,8 @@ class Matrix{
 
         Matrix(const Matrix& m);
 
+        Matrix(const vector<double>& v);
+
         void printMatrix();
 
         void setMatrix(const vector<vector<double>>& matrix);
@@ -40,7 +42,7 @@ class Matrix{
 
         void subtractScalar(const double& s);
 
-        Matrix dot(const Matrix& m);
+        Matrix dot(const Matrix& m) const;
 
         void scalarMultiply(const double& s);
 
@@ -51,6 +53,8 @@ class Matrix{
         void map(double (*func)(double));
 
         void randomize();
+
+        vector<double> toVector() const;
 
         void fillInRange(const double& bottom, const double& top);
 };

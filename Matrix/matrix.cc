@@ -25,6 +25,15 @@ Matrix::Matrix(const Matrix& m){
     this->matrix = m.matrix;
 }
 
+Matrix::Matrix(const vector<double>& v){
+    this->rows = v.size();
+    this->cols = 1;
+    this->matrix = vector<vector<double>>(this->rows, vector<double>(1, 0));
+    for(int i = 0; i < this->rows; i++){
+        this->matrix[i][0] = v[i];
+    }
+}
+
 void Matrix::printMatrix(){
     for(int i = 0; i < this->rows; i++){
         for(int j = 0; j < this->cols; j++){
@@ -90,7 +99,7 @@ void Matrix::subtractScalar(const double& s){
     }
 }
 
-Matrix Matrix::dot(const Matrix& m){
+Matrix Matrix::dot(const Matrix& m)const{
     if(this->cols != m.rows){
         cout << "Error: number of columns of the first matrix must be equal to the number of rows of the second matrix" << endl;
         return Matrix(0, 0);
@@ -146,6 +155,16 @@ void Matrix::map(double (*func)(double)){
             this->matrix[i][j] = func(this->matrix[i][j]);
         }
     }
+}
+
+vector<double> Matrix::toVector() const{
+    vector<double> result;
+    for(int i = 0; i < this->rows; i++){
+        for(int j = 0; j < this->cols; j++){
+            result.push_back(this->matrix[i][j]);
+        }
+    }
+    return result;
 }
 
 void Matrix::randomize(){
