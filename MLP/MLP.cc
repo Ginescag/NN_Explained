@@ -94,5 +94,7 @@ class MLP
             
             return result.toVector();
         }
+
+        void backpropagation(const vector<double>& RealOutput, const vector<double>& expectedOutput)
         
 };
