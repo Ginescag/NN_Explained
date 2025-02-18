@@ -87,22 +87,26 @@ class MLP
         }
         
         
-        vector<double> feedforward(vector<double> input) {
+        vector<Matrix> feedforward(vector<double> input) {
             Matrix layer_input = Matrix(input);
             Matrix result = layer_input;
+            vector<Matrix> results;
             
             //process each layer 1 by 1
             for(int i = 0; i < weights.size(); i++) {
                 result = processLayer(result, weights[i], bias[i]);
+                results.push_back(result);
             }
             
-            return result.toVector();
+            return results;
         }
 
         void backpropagation(const vector<double>& input, const vector<double>& expectedO){
             //this is a bit confusing as im taking arrays as parameters to convert them into matrices
             //however this will make testing much easier to visualize and understand
-            Matrix output = Matrix(feedforward(input));
+
+            vector<Matrix> hiddenResults = feedforward(input);
+            Matrix output = hiddenResults[hiddenResults.size()-1];
             Matrix expectedOutput = Matrix(expectedO);
             
             //calculate the  output error
@@ -119,8 +123,12 @@ class MLP
                     hiddenErrors.insert(hiddenErrors.begin(), error);
                 }
             }
+            //calculate deltas
+            Matrix outputDelta = output.mapStatic(dsigmoid, output);
+            outputDelta.hadamard(OutputErrors);
+            outputDelta.scalarMultiply(learning_rate);
 
-            
+            hiddenT = 
         }
 
 

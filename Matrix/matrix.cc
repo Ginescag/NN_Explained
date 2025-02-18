@@ -159,6 +159,16 @@ void Matrix::map(double (*func)(double)){
     }
 }
 
+Matrix Matrix::mapStatic(double (*func)(double), const Matrix& m){
+    Matrix result(m.rows, m.cols);
+    for(int i = 0; i < m.rows; i++){
+        for(int j = 0; j < m.cols; j++){
+            result.matrix[i][j] = func(m.matrix[i][j]);
+        }
+    }
+    return result;
+}
+
 vector<double> Matrix::toVector() const{
     vector<double> result;
     for(int i = 0; i < this->rows; i++){

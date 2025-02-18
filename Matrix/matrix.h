@@ -52,6 +52,8 @@ class Matrix{
 
         void map(double (*func)(double));
 
+        Matrix mapStatic(double (*func)(double), const Matrix& m);
+
         void randomize();
 
         vector<double> toVector() const;
