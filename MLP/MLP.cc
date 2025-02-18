@@ -105,8 +105,10 @@ class MLP
             //this is a bit confusing as im taking arrays as parameters to convert them into matrices
             //however this will make testing much easier to visualize and understand
 
-            vector<Matrix> hiddenResults = feedforward(input);
-            Matrix output = hiddenResults[hiddenResults.size()-1];
+            vector<Matrix> Results = feedforward(input);
+            Matrix output = Results[Results.size()-1];
+            Results.pop_back();
+            vector<Matrix> hiddenResults = Results;
             Matrix expectedOutput = Matrix(expectedO);
             
             //calculate the  output error
@@ -124,11 +126,30 @@ class MLP
                 }
             }
             //calculate deltas
-            Matrix outputDelta = output.mapStatic(dsigmoid, output);
-            outputDelta.hadamard(OutputErrors);
-            outputDelta.scalarMultiply(learning_rate);
+            Matrix outputGradient = output.mapStatic(dsigmoid, output);
+            outputGradient.hadamard(OutputErrors);
+            outputGradient.scalarMultiply(learning_rate);
 
-            hiddenT = 
+            Matrix hiddenT = hiddenResults[hiddenResults.size()-1].transpose();
+            Matrix deltaOutput = outputGradient.dot(hiddenT);
+            weights[weights.size()-1].add(deltaOutput);
+            bias[weights.size()-1].add(outputGradient);
+
+            for(int i = hiddenResults.size()-1; i >= 0; i--){
+                Matrix hiddenGradient = hiddenResults[i].mapStatic(dsigmoid, hiddenResults[i]);
+                hiddenGradient.hadamard(hiddenErrors[i]);
+                hiddenGradient.scalarMultiply(learning_rate);
+
+                Matrix inputT(1, 1); // Initialize with temporary dimensions
+                if(i == 0){
+                    inputT = Matrix(input).transpose();
+                } else {
+                    inputT = hiddenResults[i-1].transpose();
+                }
+                Matrix deltaHidden = hiddenGradient.dot(inputT);
+                weights[i].add(deltaHidden);
+                bias[i].add(hiddenGradient);
+            }
         }
 
 
