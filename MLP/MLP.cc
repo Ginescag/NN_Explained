@@ -21,8 +21,12 @@ using namespace std;
 //to simplify the implementation, this model will only have 2 hidden layers and only use the sigmoid activation function
 
 
-int sigmoid(double x){
+double sigmoid(double x){
     return 1/(1+exp(-x));
+}
+
+double dsigmoid(double y){
+    return y * (1 - y);
 }
 class MLP
 {
@@ -95,6 +99,29 @@ class MLP
             return result.toVector();
         }
 
-        void backpropagation(const vector<double>& RealOutput, const vector<double>& expectedOutput)
-        
+        void backpropagation(const vector<double>& input, const vector<double>& expectedO){
+            //this is a bit confusing as im taking arrays as parameters to convert them into matrices
+            //however this will make testing much easier to visualize and understand
+            Matrix output = Matrix(feedforward(input));
+            Matrix expectedOutput = Matrix(expectedO);
+            
+            //calculate the  output error
+            Matrix OutputErrors = expectedOutput.subtract(output);
+            vector<Matrix> hiddenErrors;
+            
+            //calculate the hidden errors
+            for(int i = weights.size()-1; i >= 0; i--){
+                if(i == weights.size()-1){
+                    Matrix error = weights[i].transpose().dot(OutputErrors);
+                    hiddenErrors.insert(hiddenErrors.begin(), error);
+                } else {
+                    Matrix error = weights[i].transpose().dot(hiddenErrors.front());
+                    hiddenErrors.insert(hiddenErrors.begin(), error);
+                }
+            }
+
+            
+        }
+
+
 };

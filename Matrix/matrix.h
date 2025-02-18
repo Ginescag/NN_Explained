@@ -38,7 +38,7 @@ class Matrix{
 
         void addScalar(const double& s);
 
-        void subtract(const Matrix& m);
+        Matrix subtract(const Matrix& m) const;
 
         void subtractScalar(const double& s);
 

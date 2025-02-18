@@ -79,16 +79,18 @@ void Matrix::addScalar(const double& s){
     }
 }
 
-void Matrix::subtract(const Matrix& m){
-    if(this->rows != m.rows || this->cols != m.cols){
+Matrix Matrix::subtract(const Matrix& m) const {
+    if (this->rows != m.rows || this->cols != m.cols){
         cout << "Error: matrices must have the same dimensions" << endl;
-        return;
+        return Matrix(0, 0);
     }
-    for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < this->cols; j++){
-            this->matrix[i][j] -= m.matrix[i][j];
+    Matrix result(this->rows, this->cols);
+    for (int i = 0; i < this->rows; i++){
+        for (int j = 0; j < this->cols; j++){
+            result.matrix[i][j] = this->matrix[i][j] - m.matrix[i][j];
         }
     }
+    return result;
 }
 
 void Matrix::subtractScalar(const double& s){
@@ -105,8 +107,8 @@ Matrix Matrix::dot(const Matrix& m)const{
         return Matrix(0, 0);
     }
     Matrix result(this->rows, m.cols);
-    for(int i = 0; i < this->rows; i++){
-        for(int j = 0; j < m.cols; j++){
+    for(int i = 0; i < result.rows; i++){
+        for(int j = 0; j < result.cols; j++){
             double sum = 0;
             for(int k = 0; k < this->cols; k++){
                 sum += this->matrix[i][k] * m.matrix[k][j];
