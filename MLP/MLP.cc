@@ -3,6 +3,7 @@
 #include <vector>
 #include <ctime>
 #include <cstdlib>
+#include <iomanip>
 #include "../Matrix/matrix.h"
 
 using namespace std;
@@ -126,17 +127,18 @@ class MLP
                 }
             }
             //calculate deltas
-            Matrix outputGradient = output.mapStatic(dsigmoid, output);
+            Matrix outputGradient = Matrix::mapStatic(dsigmoid, output);
             outputGradient.hadamard(OutputErrors);
             outputGradient.scalarMultiply(learning_rate);
-
+            
             Matrix hiddenT = hiddenResults[hiddenResults.size()-1].transpose();
             Matrix deltaOutput = outputGradient.dot(hiddenT);
             weights[weights.size()-1].add(deltaOutput);
             bias[weights.size()-1].add(outputGradient);
 
+
             for(int i = hiddenResults.size()-1; i >= 0; i--){
-                Matrix hiddenGradient = hiddenResults[i].mapStatic(dsigmoid, hiddenResults[i]);
+                Matrix hiddenGradient = Matrix::mapStatic(dsigmoid, hiddenResults[i]);
                 hiddenGradient.hadamard(hiddenErrors[i]);
                 hiddenGradient.scalarMultiply(learning_rate);
 
@@ -147,10 +149,74 @@ class MLP
                     inputT = hiddenResults[i-1].transpose();
                 }
                 Matrix deltaHidden = hiddenGradient.dot(inputT);
-                weights[i].add(deltaHidden);
+                weights[i].add(deltaHidden);;
                 bias[i].add(hiddenGradient);
+                
             }
         }
-
-
 };
+
+void printVector(const std::vector<double>& vec, const std::string& label) {
+    std::cout << label << ": [";
+    for (const auto& val : vec) {
+        std::cout << std::fixed << std::setprecision(4) << val << " ";
+    }
+    std::cout << "]" << std::endl;
+}
+
+void printMatrix(const Matrix& m, const std::string& label) {
+    std::cout << label << ":" << std::endl;
+    m.printMatrix();
+    std::cout << std::endl;
+}
+
+int main() {
+    // Create a simple MLP for XOR
+    // 2 inputs -> 4 neurons hidden layer -> 4 neurons hidden layer -> 1 output
+    MLP mlp(0.1, 1.0, 2, {4, 4}, 1, sigmoid);
+    
+    // Test data (XOR example: 1 XOR 0 = 1)
+    std::vector<double> input = {1.0, 0.0};
+    std::vector<double> expected = {1.0};
+
+    std::cout << "=== Testing Neural Network ===" << std::endl;
+    std::cout << "\nInput values:" << std::endl;
+    printVector(input, "Input");
+    printVector(expected, "Expected Output");
+
+    // Initial output before training
+    std::cout << "\n=== Initial Output ===" << std::endl;
+    vector<Matrix> initial_results = mlp.feedforward(input);
+    std::cout << "Output before training:" << std::endl;
+    initial_results[initial_results.size()-1].printMatrix();
+
+    // Training process
+    std::cout << "\n=== Training Process ===" << std::endl;
+    for(int i = 0; i < 50; i++) {
+        std::cout << "\nIteration " << i + 1 << ":" << std::endl;
+        std::cout << "----------------------" << std::endl;
+        
+        // Perform backpropagation
+        mlp.backpropagation(input, expected);
+        
+        // Get current output
+        vector<Matrix> current_results = mlp.feedforward(input);
+        std::cout << "Current output:" << std::endl;
+        current_results[current_results.size()-1].printMatrix();
+        
+        // Calculate and display error
+        double error = abs(expected[0] - current_results[current_results.size()-1].getElement(0, 0));
+        std::cout << "Error: " << std::fixed << std::setprecision(6) << error << std::endl;
+    }
+
+    // Show final results
+    std::cout << "\n=== Final Results ===" << std::endl;
+    vector<Matrix> final_results = mlp.feedforward(input);
+    std::cout << "Final output:" << std::endl;
+    final_results[final_results.size()-1].printMatrix();
+    
+    double final_error = abs(expected[0] - final_results[final_results.size()-1].getElement(0, 0));
+    std::cout << "Final error: " << std::fixed << std::setprecision(6) << final_error << std::endl;
+
+    return 0;
+}

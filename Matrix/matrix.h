@@ -24,7 +24,7 @@ class Matrix{
 
         Matrix(const vector<double>& v);
 
-        void printMatrix();
+        void printMatrix() const;
 
         void setMatrix(const vector<vector<double>>& matrix);
 
@@ -36,7 +36,7 @@ class Matrix{
 
         void add(const Matrix& m);
 
-        void addScalar(const double& s);
+        void add(const double& s);
 
         Matrix subtract(const Matrix& m) const;
 
@@ -52,7 +52,7 @@ class Matrix{
 
         void map(double (*func)(double));
 
-        Matrix mapStatic(double (*func)(double), const Matrix& m);
+        static Matrix mapStatic(double (*func)(double), const Matrix& m);
 
         void randomize();
 

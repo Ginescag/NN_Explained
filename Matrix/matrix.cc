@@ -34,7 +34,7 @@ Matrix::Matrix(const vector<double>& v){
     }
 }
 
-void Matrix::printMatrix(){
+void Matrix::printMatrix() const{
     for(int i = 0; i < this->rows; i++){
         for(int j = 0; j < this->cols; j++){
             cout << this->matrix[i][j] << " ";
@@ -61,7 +61,7 @@ double Matrix::getElement(const int& row, const int& col) const {
 
 void Matrix::add(const Matrix& m){
     if(this->rows != m.rows || this->cols != m.cols){
-        cout << "Error: matrices must have the same dimensions" << endl;
+        cout << "Error: matrices must have the same dimensions1" << endl;
         return;
     }
     for(int i = 0; i < this->rows; i++){
@@ -71,7 +71,7 @@ void Matrix::add(const Matrix& m){
     }
 }
 
-void Matrix::addScalar(const double& s){
+void Matrix::add(const double& s){
     for(int i = 0; i < this->rows; i++){
         for(int j = 0; j < this->cols; j++){
             this->matrix[i][j] += s;
@@ -121,7 +121,7 @@ Matrix Matrix::dot(const Matrix& m)const{
 
 Matrix Matrix::hadamard(const Matrix& m){
     if(this->rows != m.rows || this->cols != m.cols){
-        cout << "Error: matrices must have the same dimensions" << endl;
+        cout << "Error: matrices must have the same dimensions2" << endl;
         return Matrix(0, 0);
     }
     Matrix result(this->rows, this->cols);

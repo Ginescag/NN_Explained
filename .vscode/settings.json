@@ -2,6 +2,7 @@
     "files.associations": {
         "vector": "cpp",
         "cmath": "cpp",
-        "xlocale": "cpp"
+        "xlocale": "cpp",
+        "iostream": "cpp"
     }
 }
